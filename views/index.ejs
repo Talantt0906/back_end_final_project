@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Discover</title>
+    <meta name="referrer" content="no-referrer">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+ <div class="sidebar">
+        <div class="logo">
+            <i class="fab fa-spotify"></i> Music Discover
+        </div>
+        
+        <div class="nav-links">
+            <div style="margin-bottom: 20px;">
+                <input type="text" id="searchInput" placeholder="Search songs..." 
+                       style="width: 100%; padding: 10px 15px; border-radius: 20px; border: none; background: #333; color: white; outline: none;">
+            </div>
+
+            <button onclick="showSection('home')"><i class="fas fa-home"></i> Home</button>
+            <button onclick="showSection('library')"><i class="fas fa-book"></i> Your Library</button>
+        </div>
+
+        <div class="auth-section">
+            <button class="btn-login" id="loginBtn">Log in</button>
+        </div>
+        <button id="adminBtn" style="display:none; background-color: #e91e63; color: white; border: none; padding: 10px 20px; border-radius: 20px; font-weight: bold; cursor: pointer; margin-left: 10px;">
+    ⚡ Admin Panel
+</button>
+    </div>
+
+    <div class="main-content">
+        
+        <div id="home-view">
+            <header style="margin-bottom: 40px; display: flex; justify-content: space-between; align-items: center; padding-top: 20px;">
+                <div>
+                    <h1 style="font-size: 40px; margin: 0; letter-spacing: -1px;">Good Morning</h1>
+                    <p style="color: #b3b3b3; margin-top: 5px;">Time to discover something new.</p>
+                </div>
+                <button id="createPlaylistBtn" class="btn-large-action" style="display: none;">
+                    + Create Playlist
+                </button>
+            </header>
+
+            <div class="section-header">
+                <h2>🔥 Trending Now</h2>
+            </div>
+            <div class="songs-grid" id="trending-container"></div>
+
+            <div class="section-header" style="margin-top: 60px;">
+                <h2>💃 Pop & K-Pop Hits</h2>
+            </div>
+            <div class="songs-grid" id="pop-kpop-container"></div>
+
+            <div class="section-header" style="margin-top: 60px;">
+                <h2>🎸 Rock & Hip-Hop Energy</h2>
+            </div>
+            <div class="songs-grid" id="rock-hiphop-container"></div>
+            
+            <div style="height: 100px;"></div>
+        </div>
+
+        <div id="library-view" style="display: none;">
+            <header style="margin-bottom: 30px; padding-top: 20px;">
+                <h1 style="font-size: 40px; margin: 0;">Your Playlists</h1>
+            </header>
+            <div class="songs-grid" id="playlists-container">
+                </div>
+        </div>
+
+    </div>
+
+    <div class="modal" id="authModal">
+        <div class="modal-content login-box">
+            <span class="close-btn" onclick="closeModal('authModal')">&times;</span>
+            <h2 id="authTitle">Log in</h2>
+            
+            <form id="loginForm">
+                <input type="text" id="loginUser" placeholder="Username" required>
+                <input type="password" id="loginPass" placeholder="Password" required>
+                <button type="submit" class="btn-submit">LOG IN</button>
+                <p class="switch-text">Don't have an account? <span onclick="switchMode('register')">Sign up</span></p>
+            </form>
+
+            <form id="registerForm" style="display: none;">
+                <input type="text" id="regUser" placeholder="Choose a username" required>
+                <input type="password" id="regPass" placeholder="Create a password" required>
+                <button type="submit" class="btn-submit" style="background-color: white; color: black;">SIGN UP</button>
+                <p class="switch-text">Already have an account? <span onclick="switchMode('login')">Log in</span></p>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="songModal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('songModal')">&times;</span>
+            
+            <div class="modal-left">
+                <img id="modal-img" src="" alt="Album Art">
+                <h2 id="modal-title">Song Title</h2>
+                <p id="modal-artist">Artist Name</p>
+                <button id="modal-play-btn" class="btn-large-action" style="margin-top: 15px; width: 100%;">
+    ▶ PLAY
+</button>
+
+                
+                <div id="addToPlaylistSection" style="margin-top: 20px; width: 100%; display: none;">
+                    <select id="playlistSelect" style="padding: 8px; width: 70%; border-radius: 4px;">
+                        <option value="">Select a playlist...</option>
+                    </select>
+                    <button onclick="addToPlaylist()" style="padding: 8px; background: #1db954; border: none; color: white; border-radius: 4px;">Add</button>
+                </div>
+            </div>
+
+            <div class="modal-right">
+                <h3>Reviews</h3>
+                <div class="comments-section" id="modal-comments"></div>
+                
+                <div id="reviewInputSection" style="margin-top: 10px; display: none;">
+                    <div style="display: flex; gap: 10px;">
+                        <input type="number" id="reviewRating" min="1" max="5" value="5" style="width: 50px; padding: 5px;">
+                        <input type="text" id="reviewText" placeholder="Write a review..." style="flex:1; padding: 10px; border-radius: 20px; border:none; background:#333; color:white;">
+                        <button onclick="submitReview()" style="background: transparent; border: none; color: #1db954; cursor: pointer;">➤</button>
+                    </div>
+                </div>
+                <div id="loginToReview" style="margin-top: 10px; color: #777; font-size: 14px; display: block;">
+                    <span onclick="openAuthModal()" style="color: white; text-decoration: underline; cursor: pointer;">Log in</span> to review or add to playlist.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="createPlaylistModal">
+        <div class="modal-content login-box" style="height: auto;">
+            <span class="close-btn" onclick="closeModal('createPlaylistModal')">&times;</span>
+            <h2>Create Playlist</h2>
+            <input type="text" id="newPlaylistName" placeholder="Playlist Name" style="width: 100%; padding: 10px; margin-bottom: 10px;">
+            <input type="text" id="newPlaylistDesc" placeholder="Description" style="width: 100%; padding: 10px; margin-bottom: 20px;">
+            <button onclick="submitCreatePlaylist()" class="btn-submit">CREATE</button>
+        </div>
+    </div>
+
+    <div class="modal" id="playlistModal">
+    <div class="modal-content" style="max-width: 600px; background: #181818;">
+        <span class="close-btn" onclick="closeModal('playlistModal')">&times;</span>
+        
+        <div style="text-align: center; margin-bottom: 20px;">
+            <div style="font-size: 60px; margin-bottom: 10px;">🎵</div>
+            <h2 id="pl-modal-title" style="font-size: 2em; margin:0;">Playlist Name</h2>
+            <p id="pl-modal-desc" style="color: #b3b3b3;">Description</p>
+        </div>
+
+        <div id="pl-songs-list" style="max-height: 300px; overflow-y: auto; border-top: 1px solid #333; padding-top: 10px;">
+            </div>
+    </div>
+</div>
+
+<div id="adminModal" class="modal" style="display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); align-items: center; justify-content: center;">
+    
+    <div class="modal-content" style="
+        background-color: #282828; 
+        color: white; 
+        padding: 40px; 
+        border-radius: 12px; 
+        width: 450px; 
+        max-width: 90%; 
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
+        display: flex; 
+        flex-direction: column; /* 关键：让元素垂直排列 */
+        gap: 15px; /* 元素之间的间距 */
+        position: relative;
+    ">
+        
+        <span onclick="document.getElementById('adminModal').style.display='none'" 
+              style="position: absolute; top: 15px; right: 20px; font-size: 24px; cursor: pointer; color: #b3b3b3; transition: 0.3s;"
+              onmouseover="this.style.color='white'"
+              onmouseout="this.style.color='#b3b3b3'">&times;</span>
+
+        <h2 style="color: #e91e63; text-align: center; margin-bottom: 10px; font-size: 24px;">
+            🔥 Upload New Song
+        </h2>
+        
+        <div style="display: flex; flex-direction: column; gap: 5px;">
+            <label style="font-size: 12px; color: #b3b3b3; font-weight: bold;">Song Title</label>
+            <input type="text" id="newSongTitle" placeholder="e.g. Starboy" 
+                   style="padding: 12px; border-radius: 4px; border: 1px solid #444; background: #121212; color: white; font-size: 14px; outline: none;">
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 5px;">
+            <label style="font-size: 12px; color: #b3b3b3; font-weight: bold;">Artist</label>
+            <input type="text" id="newSongArtist" placeholder="e.g. The Weeknd" 
+                   style="padding: 12px; border-radius: 4px; border: 1px solid #444; background: #121212; color: white; font-size: 14px; outline: none;">
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 5px;">
+            <label style="font-size: 12px; color: #b3b3b3; font-weight: bold;">Genre</label>
+            <input type="text" id="newSongGenre" placeholder="e.g. Pop, R&B" 
+                   style="padding: 12px; border-radius: 4px; border: 1px solid #444; background: #121212; color: white; font-size: 14px; outline: none;">
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 5px;">
+            <label style="font-size: 12px; color: #b3b3b3; font-weight: bold;">Cover Image URL</label>
+            <input type="text" id="newSongCover" placeholder="https://..." 
+                   style="padding: 12px; border-radius: 4px; border: 1px solid #444; background: #121212; color: white; font-size: 14px; outline: none;">
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 5px;">
+            <label style="font-size: 12px; color: #b3b3b3; font-weight: bold;">Audio URL (.mp3)</label>
+            <input type="text" id="newSongAudio" placeholder="https://..." 
+                   style="padding: 12px; border-radius: 4px; border: 1px solid #444; background: #121212; color: white; font-size: 14px; outline: none;">
+        </div>
+        
+        <button onclick="submitNewSong()" 
+                style="margin-top: 10px; background-color: #e91e63; color: white; padding: 14px; border: none; border-radius: 25px; font-weight: bold; cursor: pointer; font-size: 16px; letter-spacing: 1px; transition: transform 0.2s;"
+                onmouseover="this.style.transform='scale(1.02)'"
+                onmouseout="this.style.transform='scale(1)'">
+            UPLOAD NOW 🚀
+        </button>
+
+    </div>
+</div>
+
+
+    <script src="/js/script.js"></script>
+</body>
+</html>

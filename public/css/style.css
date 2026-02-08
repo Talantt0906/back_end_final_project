@@ -1,0 +1,373 @@
+/* public/css/style.css */
+:root {
+    --bg-black: #121212;
+    --bg-dark-gray: #181818;
+    --bg-light-gray: #282828;
+    --text-white: #ffffff;
+    --text-gray: #b3b3b3;
+    --primary-color: #1db954; /* Spotify Green */
+    --hover-color: #2a2a2a;
+}
+
+body {
+    margin: 0;
+    font-family: 'Circular', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background-color: var(--bg-black);
+    color: var(--text-white);
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* --- 侧边栏 (Sidebar) --- */
+.sidebar {
+    width: 240px;
+    background-color: black;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--text-white);
+    margin-bottom: 20px;
+}
+
+.nav-links button {
+    background: none;
+    border: none;
+    color: var(--text-gray);
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: left;
+    padding: 10px 0;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+}
+
+.nav-links button:hover {
+    color: var(--text-white);
+}
+
+.auth-section {
+    margin-top: auto; /* 推到底部 */
+}
+
+.btn-login {
+    background-color: var(--text-white);
+    color: black;
+    border: none;
+    padding: 12px 32px;
+    border-radius: 50px;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+}
+
+.btn-login:hover { transform: scale(1.05); }
+
+/* --- 主内容区 (Main Content) --- */
+.main-content {
+    flex: 1;
+    background-color: var(--bg-black); /* 或者用渐变 */
+    background: linear-gradient(180deg, #202020 0%, #121212 100%);
+    padding: 20px 40px;
+    overflow-y: auto; /* 允许滚动 */
+}
+
+h2 { font-size: 24px; margin-bottom: 20px; }
+
+/* 网格布局：自动适应屏幕宽度 */
+.songs-grid {
+    display: grid;
+    /* 关键：自动填充，每张卡片最小 160px，最大自动拉伸 */
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    
+    /* 行与行之间、列与列之间的间距 */
+    gap: 24px; 
+    
+    /* 每一个大板块底部的留白 */
+    margin-bottom: 60px; 
+}
+
+/* 歌曲卡片 */
+.card {
+    background-color: var(--bg-dark-gray);
+    padding: 16px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+}
+
+.card:hover { background-color: var(--bg-light-gray); }
+
+.card img {
+    width: 100%;
+    aspect-ratio: 1; /* 强制正方形 */
+    object-fit: cover;
+    border-radius: 4px;
+    margin-bottom: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4); /* 加深阴影，更有质感 */
+}
+
+.card h3 {
+    font-size: 16px;
+    margin: 0 0 8px 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.card p {
+    font-size: 14px;
+    color: var(--text-gray);
+    margin: 0;
+}
+
+/* --- 详情弹窗 (Modal) --- */
+.modal {
+    display: none; /* 默认隐藏 */
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.8);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: #282828;
+    width: 80%;
+    max-width: 900px;
+    height: 80%;
+    border-radius: 10px;
+    display: flex;
+    overflow: hidden;
+    position: relative;
+}
+
+.modal-left {
+    flex: 1;
+    padding: 40px;
+    background: linear-gradient(135deg, #404040, #282828);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.modal-left img {
+    width: 80%;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    margin-bottom: 20px;
+}
+
+.modal-right {
+    flex: 1;
+    padding: 30px;
+    background-color: #121212;
+    display: flex;
+    flex-direction: column;
+}
+
+.close-btn {
+    position: absolute;
+    top: 20px; right: 20px;
+    font-size: 30px;
+    color: white;
+    cursor: pointer;
+    background: none; border: none;
+}
+
+.comments-section {
+    margin-top: 20px;
+    flex: 1;
+    overflow-y: auto;
+    border-top: 1px solid #333;
+    padding-top: 10px;
+}
+
+.comment {
+    font-size: 14px;
+    color: #ccc;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #222;
+    padding-bottom: 5px;
+}
+
+.login-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 400px;     /* 限制宽度 */
+    height: auto;     /* 高度自适应 */
+    padding: 40px;
+    background-color: black; /* 纯黑背景 */
+    border: 1px solid #333;
+}
+
+.login-box h2 {
+    margin-bottom: 30px;
+    letter-spacing: -1px;
+    font-size: 30px;
+}
+
+/* 修改这里：让登录和注册表单都使用竖排布局 */
+#loginForm, #registerForm {
+    width: 100%;
+    display: flex;
+    flex-direction: column; /* 关键：让元素从上到下排列，而不是挤在一行 */
+    gap: 15px;              /* 元素之间的间距 */
+}
+
+/* 让两个表单的输入框样式通用 */
+#loginForm input, #registerForm input {
+    padding: 14px;
+    border-radius: 4px;
+    border: 1px solid #555;
+    background-color: #121212;
+    color: white;
+    font-size: 16px;
+}
+
+/* 选中时的发光效果 */
+#loginForm input:focus, #registerForm input:focus {
+    border-color: white;
+    outline: none;
+}
+
+.btn-submit {
+    background-color: var(--primary-color); /* 绿色按钮 */
+    color: black;
+    font-weight: bold;
+    padding: 14px;
+    border-radius: 30px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+    transition: transform 0.1s;
+}
+
+.btn-submit:hover {
+    transform: scale(1.02);
+    background-color: #1ed760; /* 亮一点的绿色 */
+}
+
+.switch-text {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #b3b3b3;
+}
+
+.switch-text span {
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.switch-text span:hover {
+    color: var(--primary-color); /* 鼠标悬停变绿 */
+}
+
+/* public/css/style.css (追加) */
+
+.btn-small {
+    background-color: var(--primary-color);
+    color: black;
+    border: none;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#home-view, #library-view {
+    width: 100%;
+}
+
+/* 简单的下拉菜单样式 */
+select {
+    background-color: #333;
+    color: white;
+    border: 1px solid #555;
+}
+
+/* public/css/style.css */
+
+/* 1. 专门为大按钮设计的样式 */
+.btn-large-action {
+    background-color: var(--primary-color);
+    color: black;
+    border: none;
+    padding: 12px 24px; /* 增加内边距 */
+    font-size: 16px;    /*以此加大字体 */
+    font-weight: 800;   /* 字体加粗 */
+    border-radius: 50px; /* 圆角胶囊形状 */
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.2s;
+    text-transform: uppercase; /*以此全大写 */
+    letter-spacing: 1px;
+}
+
+.btn-large-action:hover {
+    transform: scale(1.05); /* 悬停放大 */
+    background-color: #1ed760; /* 变亮 */
+}
+
+/* 2. 首页板块样式 */
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: 40px; /* 板块之间的间距 */
+    margin-bottom: 20px;
+    border-bottom: 1px solid #333; /* 下划线 */
+    padding-bottom: 10px;
+}
+
+.section-header h2 {
+    font-size: 24px;
+    margin: 0;
+    color: white;
+}
+
+.section-subtitle {
+    font-size: 14px;
+    color: #b3b3b3;
+    margin: 0;
+    cursor: pointer;
+}
+
+.section-subtitle:hover {
+    text-decoration: underline;
+}
+
+/* 隐藏滚动条但允许横向滚动 (可选：如果你想做横向滑动的行) */
+/* 目前我们保持网格布局，为了填满屏幕 */
+
+/* 删除评论按钮的样式 */
+.delete-review-btn {
+    position: absolute;
+    right: 0;
+    top: 0;
+    cursor: pointer;
+    color: #555; /* 默认灰色 */
+    font-size: 14px;
+    transition: color 0.2s;
+}
+
+.delete-review-btn:hover {
+    color: #ff5555; /* 悬停变红 */
+    font-weight: bold;
+}

@@ -141,10 +141,10 @@ This project fulfills all requirements outlined in the Final Project specificati
 
 ## 👥 Contributors
 
-**Developer**: [Your Name]  
+**Developer**: Talant 
 **Course**: Web Technologies 2  
-**Institution**: [Your University]  
-**Semester**: [Term/Year]
+**Institution**: AITU 
+**Semester**:2nd
 
 ## 📄 License
 
@@ -162,7 +162,7 @@ This project is developed for educational purposes as part of a university cours
 For questions or feedback regarding this project:
 
 - **GitHub**: [@Talantt0906](https://github.com/Talantt0906)
-- **Email**: [Your Email]
+
 
 ---
 
